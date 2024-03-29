@@ -12,11 +12,11 @@
         <table class="table mt-5">
           <thead>
             <tr>
-              <th>Nom</th>
-              <th>Profession</th>
-              <th>Département</th>
+              <th>Nom <a href="{{ path('app_home', {'sort': 'name'}) }}"><i class="fa-solid fa-sort"></i></a></th>
+              <th>Profession <a href="{{ path('app_home', {'sort': 'profession'}) }}"><i class="fa-solid fa-sort"></i></a></th>
+              <th>Département <a href="{{ path('app_home', {'sort': 'departement'}) }}"><i class="fa-solid fa-sort"></i></a></th>
               <th>Ville</th>
-              <th>Date de création</th>
+              <th>Date de création <a href="{{ path('app_home', {'sort': 'createdAt'}) }}"><i class="fa-solid fa-sort"></i></a></th>
               <th>Créé par</th>
               <th>Action</th>
             </tr>

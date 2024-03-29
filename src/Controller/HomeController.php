@@ -22,12 +22,12 @@ class HomeController extends AbstractController
     }
 
     #[Route('/home', name: 'app_home')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $sort = $request->query->get('sort', 'name');
         //avoir toutes les données de contact
         $entityManager = $this->managerRegistry->getManager();
-        $contacts = $entityManager->getRepository(Contact::class)->findAll();
-
+        $contacts = $entityManager->getRepository(Contact::class)->findBy([], [$sort => 'ASC']);
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
