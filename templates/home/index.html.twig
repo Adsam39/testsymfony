@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <a href="/home/add"><button class="btn btn-primary d-flex align-items-center justify-content-center mt-5">
+          <i class="fas fa-plus mr-2"></i>
+          Ajouter un contact
+        </button></a>
+        <table class="table mt-5">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Profession</th>
+              <th>Département</th>
+              <th>Ville</th>
+              <th>Date de création</th>
+              <th>Créé par</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for contact in contacts %}
+              <tr>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.profession }}</td>
+                <td>{{ contact.departement }}</td>
+                <td>{{ contact.ville }}</td>
+                <td>{{ contact.createdAt|date('d/m/Y') }}</td>
+                <td>{{ contact.user.email }}</td>
+                <td>
+                  <a href="{{ path('app_edit', {'id': contact.id}) }}">
+                        <i class="fas fa-pen"></i>
+                  </a>
+                  <a href="{{ path('app_delete', {'id': contact.id}) }}" class="text-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contact ?')">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
