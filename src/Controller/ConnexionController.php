@@ -6,11 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\User;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class ConnexionController extends AbstractController
 {
@@ -30,7 +27,7 @@ class ConnexionController extends AbstractController
         ]);
     }
 
-    #[Route('/connexion', name: 'app_connexion_post', methods: ['POST'])]
+    /*#[Route('/connexion', name: 'app_connexion_post', methods: ['POST'])]
     public function connexion(Request $request, UserPasswordHasherInterface $passwordHasher, AuthenticationUtils $authenticationUtils): Response
     {
         // Récupérer les erreurs de connexion s'il y en a
@@ -50,7 +47,7 @@ class ConnexionController extends AbstractController
         // Vérifier les identifiants de l'utilisateur
         $entityManager = $this->managerRegistry->getManager();
         $user = $entityManager->getRepository(User::class)->findOneByEmail($email);
-        if ($user && $passwordHasher->isPasswordValid($user->getPassword(), $password)) {
+        if ($user && $passwordHasher->isPasswordValid($user, $password)) {
             // Connecter l'utilisateur et rediriger vers la page d'accueil
             return $this->redirectToRoute('app_home');
         }
@@ -60,6 +57,24 @@ class ConnexionController extends AbstractController
         return $this->render('connexion/index.html.twig', [
             'last_username' => $lastUsername,
             'error'         => 'Identifiants invalides.',
+        ]);
+    }*/
+
+    #[Route('/connexion', name: 'app_connexion_post', methods: ['POST'])]
+    public function connexion(Request $request): Response
+    {
+        $email = $request->request->get('email');
+        $password = $request->request->get('password');
+
+        $entityManager = $this->managerRegistry->getManager();
+        $user = $entityManager->getRepository(User::class)->findOneByEmail($email);
+
+        if ($user && $user->getPassword() === $password) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('connexion/index.html.twig', [
+            'error' => 'Identifiants invalides.',
         ]);
     }
 }
