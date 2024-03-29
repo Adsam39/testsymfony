@@ -21,20 +21,20 @@
             </tr>
           </thead>
           <tbody>
-            {# Inclure ici les données du contact à partir de la base de données #}
-            <tr>
-              <td>John Doe</td>
-              <td>Développeur</td>
-              <td>Informatique</td>
-              <td>Paris</td>
-              <td>2021-02-15</td>
-              <td>Admin</td>
-              <td>
-                <i class="fas fa-pen"></i>
-                <i class="fas fa-trash"></i>
-              </td>
-            </tr>
-            {# Ajouter d'autres lignes pour chaque contact #}
+            {% for contact in contacts %}
+              <tr>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.profession }}</td>
+                <td>{{ contact.departement }}</td>
+                <td>{{ contact.ville }}</td>
+                <td>{{ contact.createdAt|date('d/m/Y') }}</td>
+                <td>{{ contact.user.email }}</td>
+                <td>
+                  <i class="fas fa-pen"></i>
+                  <i class="fas fa-trash"></i>
+                </td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

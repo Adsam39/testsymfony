@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -42,5 +43,11 @@ class User
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    // Implémentation de l'interface PasswordAuthenticatedUserInterface
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 }
