@@ -31,7 +31,9 @@
                 <td>{{ contact.user.email }}</td>
                 <td>
                   <i class="fas fa-pen"></i>
-                  <i class="fas fa-trash"></i>
+                  <a href="{{ path('app_delete', {'id': contact.id}) }}" class="text-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contact ?')">
+                    <i class="fas fa-trash"></i>
+                  </a>
                 </td>
               </tr>
             {% endfor %}

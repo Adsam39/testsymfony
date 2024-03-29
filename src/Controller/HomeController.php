@@ -65,4 +65,15 @@ class HomeController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
+
+    #[Route('/home/delete/{id}', name: 'app_delete')]
+    public function deleteContact($id): Response
+    {
+        $entityManager = $this->managerRegistry->getManager();
+        $contact = $entityManager->getRepository(Contact::class)->find($id);
+        $entityManager->remove($contact);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
+    }
 }
