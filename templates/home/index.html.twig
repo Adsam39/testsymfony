@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <button class="btn btn-primary d-flex align-items-center justify-content-center mt-5">
+          <i class="fas fa-plus mr-2"></i>
+          Ajouter un contact
+        </button>
+        <table class="table mt-5">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Profession</th>
+              <th>Département</th>
+              <th>Ville</th>
+              <th>Date de création</th>
+              <th>Créé par</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {# Inclure ici les données du contact à partir de la base de données #}
+            <tr>
+              <td>John Doe</td>
+              <td>Développeur</td>
+              <td>Informatique</td>
+              <td>Paris</td>
+              <td>2021-02-15</td>
+              <td>Admin</td>
+              <td>
+                <i class="fas fa-pen"></i>
+                <i class="fas fa-trash"></i>
+              </td>
+            </tr>
+            {# Ajouter d'autres lignes pour chaque contact #}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
