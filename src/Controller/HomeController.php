@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\ContactRepository;
 use App\Entity\Contact;
+use Doctrine\ORM\Mapping\Id;
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\User;
 
 class HomeController extends AbstractController
 {
@@ -30,5 +33,36 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
             'contacts' => $contacts
         ]);
+    }
+
+    #[Route('/home/add', name: 'app_add')]
+    public function addContactPage(): Response
+    {
+        return $this->render('home/add.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
+    #[Route('/home/addcontact', name: 'app_add_post', methods: ['POST'])]
+    public function addContact(Request $request): Response
+    {
+        var_dump($request->request->all());
+        $entityManager = $this->managerRegistry->getManager();
+
+        $user = $entityManager->getRepository(User::class)->find(1);
+
+        $contact = new Contact();
+        $contact->setName($request->request->get('name'));
+        $contact->setProfession($request->request->get('profession'));
+        $departement = intval($request->request->get('department'));
+        $contact->setDepartement($departement);
+        $contact->setVille($request->request->get('city'));
+        $contact->setCreatedAt(new \DateTime());
+        //$contact->setUser($this->getUser());
+        $contact->setUser($user);
+        $entityManager->persist($contact);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
     }
 }
