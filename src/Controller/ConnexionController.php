@@ -77,4 +77,10 @@ class ConnexionController extends AbstractController
             'error' => 'Identifiants invalides.',
         ]);
     }
+
+    #[Route('/logout', name: 'app_deconnexion')]
+    public function deconnexion(): Response
+    {
+        return $this->redirectToRoute('app_connexion');
+    }
 }
