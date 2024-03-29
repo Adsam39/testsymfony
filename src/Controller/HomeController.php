@@ -66,6 +66,34 @@ class HomeController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
+    #[Route('/home/edit/{id}', name: 'app_edit')]
+    public function editContact($id): Response
+    {
+        $entityManager = $this->managerRegistry->getManager();
+        $contact = $entityManager->getRepository(Contact::class)->find($id);
+
+        return $this->render('home/update.html.twig', [
+            'controller_name' => 'HomeController',
+            'contact' => $contact
+        ]);
+    }
+
+    #[Route('/home/update/{id}', name: 'app_update', methods: ['POST'])]
+    public function updateContact(Request $request, $id): Response
+    {
+        $entityManager = $this->managerRegistry->getManager();
+        $contact = $entityManager->getRepository(Contact::class)->find($id);
+
+        $contact->setName($request->request->get('name'));
+        $contact->setProfession($request->request->get('profession'));
+        $departement = intval($request->request->get('department'));
+        $contact->setDepartement($departement);
+        $contact->setVille($request->request->get('city'));
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
+    }
+
     #[Route('/home/delete/{id}', name: 'app_delete')]
     public function deleteContact($id): Response
     {

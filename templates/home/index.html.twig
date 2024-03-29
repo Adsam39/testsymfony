@@ -30,7 +30,9 @@
                 <td>{{ contact.createdAt|date('d/m/Y') }}</td>
                 <td>{{ contact.user.email }}</td>
                 <td>
-                  <i class="fas fa-pen"></i>
+                  <a href="{{ path('app_edit', {'id': contact.id}) }}">
+                        <i class="fas fa-pen"></i>
+                  </a>
                   <a href="{{ path('app_delete', {'id': contact.id}) }}" class="text-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contact ?')">
                     <i class="fas fa-trash"></i>
                   </a>
